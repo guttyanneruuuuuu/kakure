@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#1b3a2e" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A6%8E%3C/text%3E%3C/svg%3E" />
+  <title>めっちゃカメレオン - ブラウザ版</title>
+  <link rel="stylesheet" href="./style.css" />
+  <!-- Three.js via import map (CDN, works on static hosting) -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- ========== ローディング ========== -->
+  <div id="loading" class="overlay">
+    <div class="loading-box">
+      <div class="chameleon-logo">🦎</div>
+      <h1>めっちゃカメレオン</h1>
+      <div class="spinner"></div>
+      <p id="loading-text">ステージを準備中...</p>
+    </div>
+  </div>
+
+  <!-- ========== 縦画面警告（横にしてね） ========== -->
+  <div id="rotate-warning" class="overlay hidden">
+    <div class="rotate-box">
+      <div class="rotate-icon">📱↻</div>
+      <p>スマホを<strong>横向き</strong>にしてね！</p>
+    </div>
+  </div>
+
+  <!-- ========== タイトル画面 ========== -->
+  <div id="title-screen" class="overlay hidden">
+    <div class="title-box">
+      <div class="chameleon-logo">🦎</div>
+      <h1>めっちゃカメレオン</h1>
+      <p class="subtitle">色をぬって かくれんぼ！</p>
+      <button id="start-btn" class="big-btn">スタート</button>
+      <button id="howto-btn" class="text-btn">あそびかた</button>
+    </div>
+  </div>
+
+  <!-- ========== あそびかた ========== -->
+  <div id="howto-screen" class="overlay hidden">
+    <div class="howto-box">
+      <h2>あそびかた</h2>
+      <ul>
+        <li>🕹️ <b>左スティック</b>で移動</li>
+        <li>👆 <b>右画面スワイプ</b>でカメラを回す</li>
+        <li>🎨 <b>ペイント</b>ボタンで体に色をぬる</li>
+        <li>💧 <b>スポイト</b>で周りの色をコピー</li>
+        <li>🧍 <b>ポーズ</b>でじっと隠れる</li>
+        <li>👹 <b>オニ</b>に見つからないよう逃げ切れ！</li>
+      </ul>
+      <button id="howto-back-btn" class="big-btn">もどる</button>
+    </div>
+  </div>
+
+  <!-- ========== ゲーム本体 ========== -->
+  <div id="game-root">
+    <canvas id="game-canvas"></canvas>
+
+    <!-- HUD -->
+    <div id="hud" class="hidden">
+      <div id="top-bar">
+        <div class="hud-chip" id="timer-chip">⏱️ <span id="timer">90</span></div>
+        <div class="hud-chip" id="camo-chip">擬態 <span id="camo-meter">0%</span></div>
+        <div class="hud-chip" id="status-chip">🟢 安全</div>
+      </div>
+
+      <!-- 左：バーチャルジョイスティック -->
+      <div id="joystick-zone">
+        <div id="joystick-base">
+          <div id="joystick-knob"></div>
+        </div>
+      </div>
+
+      <!-- 右：アクションボタン -->
+      <div id="action-zone">
+        <button class="act-btn" id="btn-pose" title="ポーズ">🧍</button>
+        <button class="act-btn" id="btn-eyedrop" title="スポイト">💧</button>
+        <button class="act-btn act-btn-main" id="btn-paint" title="ペイント">🎨</button>
+      </div>
+
+      <!-- カラーパレット -->
+      <div id="palette" class="hidden">
+        <div class="palette-row" id="palette-row"></div>
+        <button id="palette-close">✕</button>
+      </div>
+    </div>
+
+    <!-- 結果画面 -->
+    <div id="result-screen" class="overlay hidden">
+      <div class="result-box">
+        <h1 id="result-title">逃げ切った！</h1>
+        <p id="result-msg"></p>
+        <div id="result-score"></div>
+        <button id="retry-btn" class="big-btn">もう一回</button>
+        <button id="result-title-btn" class="text-btn">タイトルへ</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
